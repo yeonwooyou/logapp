@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <nav>
+        <h1>Pystagram</h1>>
+    </nav>>
+    <div id="feeds", class="post-container">
+        {% for post in posts %}
+            <article class="post-header">
+                <header class="post-header">
+                    {% if post.user.profile_image %}
+                        <img src="{{ post.user.profile_image.url }}">
+                    {% endif %}
+                    <span>{{ post.user.username }}</span>
+                </header>
+                <div class="post-image splide">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            {% for image in post.postimage_set.all %}
+                                {% if image.photo %}
+                                <li class="splide__slide">
+                                    <img src="{{ image.photo.url }}">
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </article>
+            <div class="post-content">
+                {{ post.content | linebreaks }}
+            </div>
+            <div class="post-buttons">
+                <button>Likes(0)</button>
+                <span>Comments(0)</span>
+            </div>
+            <div class="post-comments">
+                <ui>
+                    {% for comment in post.comment_set.all %}
+                        <li>
+                            <span>{{ comment.user.username }}</span>
+                            <span>{{ comment.content }}</span>
+                        </li>
+                    {% endfor %}
+                </ui>
+            </div>
+            <small>{{ post.created }}</small>
+            <div class="post-comment-create">
+                <input type="text" placeholder="댓글 달기">
+                <button type="submit">게시</button>
+            </div>
+        {% endfor %}
+    <div>{{ user.username }} (ID: {{ user.id }}, {{ user.last_login }})</div>
+    <a href="/users/logout/">로그아웃</a>
+    <script>
+        const elms = document.getElementsByClassName('splide')
+        for (let i = 0; i < elms.length; i++) {
+            new Splide(elms[i]).mount();
+        }
+    </script>
+{% endblock %}

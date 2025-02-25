@@ -1,5 +1,4 @@
 from django.shortcuts import render
-import requests
 import datetime
 import json
 import random
